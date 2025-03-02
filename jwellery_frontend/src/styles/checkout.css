@@ -1,0 +1,26 @@
+.checkout-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.checkout-total {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #D4AF37;
+    margin-bottom: 20px;
+}
+
+.checkout-button {
+    background: #D4AF37 !important;
+    color: black !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border-radius: 5px;
+}
+
+.checkout-button:hover {
+    background: transparent !important;
+    border: 2px solid #D4AF37 !important;
+    color: #D4AF37 !important;
+}

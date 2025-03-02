@@ -1,0 +1,11 @@
+.dashboard-container {
+    padding: 20px;
+}
+
+.dashboard-container h6 {
+    margin-top: 10px;
+}
+
+.dashboard-container button {
+    margin-top: 15px;
+}

@@ -1,0 +1,27 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #000;
+    /* Black background */
+    color: #D4AF37;
+    /* Gold text */
+}
+
+.navbar a {
+    margin: 0 15px;
+    color: #D4AF37;
+    /* Gold links */
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar a:hover {
+    color: white;
+    background-color: #D4AF37;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
