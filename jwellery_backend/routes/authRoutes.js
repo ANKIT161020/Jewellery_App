@@ -63,4 +63,72 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// ✅ GET USER PROFILE
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// ✅ UPDATE USER PROFILE (Name & Email)
+router.put("/:id", async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { name, email },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "Profile updated successfully", updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// ✅ DELETE USER ACCOUNT
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "Account deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// ✅ FORGOT PASSWORD (Update Password Without Validation)
+router.put("/forgot-password/:id", async (req, res) => {
+  try {
+    const { newPassword, confirmPassword } = req.body;
+
+    if (newPassword !== confirmPassword)
+      return res.status(400).json({ message: "Passwords do not match" });
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { password: hashedPassword },
+      { new: true }
+    );
+
+    if (!updatedUser)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
