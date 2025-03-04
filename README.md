@@ -45,7 +45,7 @@ Follow the steps below to set up and run the **Jewelry Shop** project from scrat
 ## 1️⃣ Clone the Repository
 
 ```sh
-git clone https://github.com/your-repo/jewelry-shop.git
+git clone https://github.com/ANKIT161020/Jewellery_App.git
 cd jewelry-shop
 ```
 
