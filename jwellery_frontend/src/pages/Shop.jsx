@@ -1,11 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Typography, Grid, Card, CardMedia, CardContent, CardActions, Button, Select, MenuItem, CircularProgress } from '@mui/material';
-import { Link } from 'react-router-dom';
-import '../styles/shop.css';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+  Select,
+  MenuItem,
+  CircularProgress,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import "../styles/shop.css";
 
 function Shop() {
   const [products, setProducts] = useState([]);
-  const [filter, setFilter] = useState('All');
+  const [filter, setFilter] = useState("All");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,7 +26,7 @@ function Shop() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/products'); // Adjust if needed
+      const response = await fetch("http://localhost:5000/api/products"); // Adjust if needed
       const data = await response.json();
       setProducts(data);
       setLoading(false);
@@ -24,28 +36,40 @@ function Shop() {
     }
   };
 
-  const filteredProducts = filter === 'All' ? products : products.filter(product => product.category === filter);
+  const filteredProducts =
+    filter === "All"
+      ? products
+      : products.filter((product) => product.category === filter);
+
+  // Compute unique categories from products and add "All" as the first option.
+  const categories = [
+    "All",
+    ...new Set(products.map((product) => product.category)),
+  ];
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom className="shop-title">Discover Our Collection</Typography>
-      
-      <Select 
-        value={filter} 
-        onChange={(e) => setFilter(e.target.value)} 
+      <Typography variant="h4" gutterBottom className="shop-title">
+        Discover Our Collection
+      </Typography>
+
+      <Select
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
         className="shop-filter"
         sx={{
           backgroundColor: "black",
-          color: "#D4AF37",  // ✅ Text color fix
+          color: "#D4AF37",
           border: "1px solid #D4AF37",
-          '& .MuiSelect-icon': { color: "#D4AF37" }, // Fix dropdown arrow color
-          '& .MuiMenuItem-root': { color: "#D4AF37" }, // Fix menu item text color
+          "& .MuiSelect-icon": { color: "#D4AF37" },
+          "& .MuiMenuItem-root": { color: "#D4AF37" },
         }}
       >
-        <MenuItem value="All">All</MenuItem>
-        <MenuItem value="Necklace">Necklaces</MenuItem>
-        <MenuItem value="Ring">Rings</MenuItem>
-        <MenuItem value="Earrings">Earrings</MenuItem>
+        {categories.map((category) => (
+          <MenuItem key={category} value={category}>
+            {category}
+          </MenuItem>
+        ))}
       </Select>
 
       {loading ? (
@@ -66,7 +90,11 @@ function Shop() {
                     className="shop-card-image"
                   />
                   <CardContent>
-                    <Typography gutterBottom variant="h5" className="product-name">
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      className="product-name"
+                    >
                       {product.name}
                     </Typography>
                     <Typography variant="body1" className="product-price">
@@ -74,9 +102,9 @@ function Shop() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                     <Button
-                      component={Link} 
-                      to={`/product/${product._id}`} 
+                    <Button
+                      component={Link}
+                      to={`/product/${product._id}`}
                       className="shop-card-btn"
                       sx={{
                         backgroundColor: "#D4AF37",
@@ -85,11 +113,11 @@ function Shop() {
                         textTransform: "uppercase",
                         borderRadius: "5px",
                         padding: "8px 16px",
-                        '&:hover': {
+                        "&:hover": {
                           backgroundColor: "transparent",
                           border: "2px solid #D4AF37",
                           color: "#D4AF37",
-                        }
+                        },
                       }}
                     >
                       View Details
@@ -99,7 +127,9 @@ function Shop() {
               </Grid>
             ))
           ) : (
-            <Typography variant="h6" className="no-products">No Products Found</Typography>
+            <Typography variant="h6" className="no-products">
+              No Products Found
+            </Typography>
           )}
         </Grid>
       )}
